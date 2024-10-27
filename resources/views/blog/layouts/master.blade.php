@@ -10,14 +10,14 @@
 <body>
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">My Blog</a>
+    <a class="navbar-brand" href="{{route('blog.index')}}">My Blog</a>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="{{route('blog.index')}}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="add_blog.html">Add Blog</a>
+                <a class="nav-link" href="{{route('blog.create')}}">Add Blog</a>
             </li>
         </ul>
     </div>

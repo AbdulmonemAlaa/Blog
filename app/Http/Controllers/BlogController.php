@@ -21,7 +21,7 @@ class BlogController extends Controller
      */
     public function create()
     {
-        //
+        return view('blog.add');
     }
 
     /**
@@ -29,7 +29,15 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'author_name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'status' => 'required|in:0,1',
+            'content' => 'required|string',
+        ]);
+        Blog::create($validatedData);
+        return redirect()->route('blog.index')->with('success', 'Blog added successfully');
     }
 
     /**

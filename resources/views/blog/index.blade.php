@@ -28,7 +28,7 @@
                     <td>{{$blog->title}}</td>
                     <td>{{$blog->author_name}}</td>
                     <td>{{$blog->category}}</td>
-                    <td>{{$blog->status}}</td>
+                    <td>@if($blog->status == 1) Published @else Draft @endif</td>
                     <td>{{$blog->created_at}}</td>
                     <td>{{$blog->updated_at}}</td>
                     <td>
