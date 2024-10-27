@@ -5,7 +5,6 @@
 
 @section('content')
 
-
     <div class="container mt-4">
         <h2>Blog List</h2>
         <table class="table table-striped">
@@ -23,8 +22,10 @@
             </thead>
             <tbody>
             @foreach($blogs as $blog)
-                <tr onclick="window.location='{{ route('blog.show', $blog->id) }}'" style="cursor: pointer;">
-                    <td>{{$blog->id}}</td>
+                <tr>
+                    <td>
+                        <a href="{{ route('blog.show', $blog->id) }}">{{ $blog->id }}</a>
+                    </td>
                     <td>{{$blog->title}}</td>
                     <td>{{$blog->author_name}}</td>
                     <td>{{$blog->category}}</td>
@@ -32,9 +33,17 @@
                     <td>{{$blog->created_at}}</td>
                     <td>{{$blog->updated_at}}</td>
                     <td>
-{{--                        {{ route('blog.edit', $blog->id) }}--}}
-                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); window.location=''">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); /* Add your delete logic here */">Delete</button>
+                        <!-- Edit Button as a Link -->
+                        <form action="{{ route('blog.edit', $blog->id) }}" method="GET" style="display:inline;">
+                            <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                        </form>
+
+                        <!-- Delete Button as a POST Form -->
+                        <form action="{{ route('blog.destroy', $blog->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this blog?');">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

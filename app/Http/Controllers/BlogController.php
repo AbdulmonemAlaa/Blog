@@ -54,7 +54,8 @@ class BlogController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $blog = Blog::findOrFail($id);
+        return view('blog.edit',['blog'=>$blog]);
     }
 
     /**
@@ -62,7 +63,22 @@ class BlogController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'author_name' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'status' => 'required|in:0,1',
+            'content' => 'required|string',
+        ]);
+
+        // Find the blog entry by ID, or throw a 404 error if not found
+        $blog = Blog::findOrFail($id);
+
+        // Update the blog entry with the validated data
+        $blog->update($validatedData);
+
+        // Redirect to the blog index page with a success message
+        return redirect()->route('blog.index')->with('success', 'Blog updated successfully');
     }
 
     /**
