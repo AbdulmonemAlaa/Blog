@@ -4,11 +4,8 @@ use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 
 
-//Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-//Route::redirect('/', '/blog');
-//
-//
-//Route::get('/', [BlogController::class, 'index'])->name('blog.index');
+Route::redirect('/', '/blog');
+
 
 
 Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
