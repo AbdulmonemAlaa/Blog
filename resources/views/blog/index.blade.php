@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             @foreach($blogs as $blog)
-                <tr>
+                <tr onclick="window.location='{{ route('blog.show', $blog->id) }}'" style="cursor: pointer;">
                     <td>{{$blog->id}}</td>
                     <td>{{$blog->title}}</td>
                     <td>{{$blog->author_name}}</td>
@@ -32,14 +32,14 @@
                     <td>{{$blog->created_at}}</td>
                     <td>{{$blog->updated_at}}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm">Edit</button>
-                        <button class="btn btn-danger btn-sm">Delete</button>
+{{--                        {{ route('blog.edit', $blog->id) }}--}}
+                        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); window.location=''">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="event.stopPropagation(); /* Add your delete logic here */">Delete</button>
                     </td>
                 </tr>
             @endforeach
-
-            <!-- Add more rows as needed -->
             </tbody>
+
         </table>
     </div>
 

@@ -15,5 +15,6 @@ Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');
     Route::get('/create', [BlogController::class, 'create'])->name('create');
     Route::post('/store', [BlogController::class, 'store'])->name('store');
+    Route::get('/{id}',[BlogController::class, 'show'])->name('show');
 
 });
