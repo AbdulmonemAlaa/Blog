@@ -22,19 +22,22 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>First Blog</td>
-                <td>John Doe</td>
-                <td>Tech</td>
-                <td>Published</td>
-                <td>2024-10-27</td>
-                <td>2024-10-27</td>
-                <td>
-                    <button class="btn btn-primary btn-sm">Edit</button>
-                    <button class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
+            @foreach($blogs as $blog)
+                <tr>
+                    <td>{{$blog->id}}</td>
+                    <td>{{$blog->title}}</td>
+                    <td>{{$blog->author_name}}</td>
+                    <td>{{$blog->category}}</td>
+                    <td>{{$blog->status}}</td>
+                    <td>{{$blog->created_at}}</td>
+                    <td>{{$blog->updated_at}}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm">Edit</button>
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </td>
+                </tr>
+            @endforeach
+
             <!-- Add more rows as needed -->
             </tbody>
         </table>
