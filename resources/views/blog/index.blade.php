@@ -21,10 +21,11 @@
             </tr>
             </thead>
             <tbody>
+            @php $i=1 @endphp
             @foreach($blogs as $blog)
                 <tr>
                     <td>
-                        <a href="{{ route('blog.show', $blog->id) }}">{{ $blog->id }}</a>
+                        <a href="{{ route('blog.show', $blog->id) }}">{{ $i }}</a>
                     </td>
                     <td>{{$blog->title}}</td>
                     <td>{{$blog->author_name}}</td>
@@ -46,6 +47,7 @@
                         </form>
                     </td>
                 </tr>
+                @php $i++ @endphp
             @endforeach
             </tbody>
 

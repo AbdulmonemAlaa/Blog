@@ -86,6 +86,13 @@ class BlogController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // Find the blog entry by ID, or throw a 404 error if not found
+        $blog = Blog::findOrFail($id);
+
+        // Delete the blog entry
+        $blog->delete();
+
+        // Redirect to the blog index page with a success message
+        return redirect()->route('blog.index')->with('success', 'Blog deleted successfully');
     }
 }
