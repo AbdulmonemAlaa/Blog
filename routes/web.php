@@ -16,5 +16,5 @@ Route::group(['prefix' => 'blog', 'as' => 'blog.'], function () {
     Route::get('/{id}/edit',[BlogController::class, 'edit'])->name('edit');
     Route::put('/{id}/update',[BlogController::class, 'update'])->name('update');
     Route::delete('/{id}',[BlogController::class, 'destroy'])->name('destroy');
-
+    Route::Post('/search', [BlogController::class, 'search'])->name('search');
 });

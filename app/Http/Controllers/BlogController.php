@@ -95,4 +95,17 @@ class BlogController extends Controller
         // Redirect to the blog index page with a success message
         return redirect()->route('blog.index')->with('success', 'Blog deleted successfully');
     }
+
+    public function search(Request $request)
+    {
+        if ($request->ajax()) {
+            $search = $request->input('search');
+
+            $blogs = Blog::where('title', 'like', '%' . $search . '%')
+                ->orderBy('id', 'ASC')
+                ->get(); // Fetch all results without pagination
+
+            return view('blog.ajax_search', ['blogs' => $blogs]);
+        }
+    }
 }
