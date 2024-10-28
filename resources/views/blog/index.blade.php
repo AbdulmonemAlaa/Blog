@@ -11,6 +11,7 @@
         <div class="form-group">
             <input type="text" id="search" class="form-control" placeholder="Search for blog name ...">
         </div>
+        <div id="ajax_search_result">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -24,7 +25,7 @@
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody id="ajax_search_result">
+            <tbody>
             {{-- Initial data loading will go here --}}
             @foreach($blogs as $blog)
                 <tr>
@@ -51,6 +52,8 @@
             @endforeach
             </tbody>
         </table>
+            {{ $blogs->links() }}
+        </div>
     </div>
 
 
@@ -59,28 +62,46 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Listen for input events on the search box
-            $('#search').on('input', function () {
+            $(document).on('input', "#search", function() {
                 var search = $(this).val();
+                performSearch(1, search); // Default to page 1 for new searches
+            });
 
+            // Function to perform AJAX search
+            function performSearch(page, search) {
                 $.ajax({
-                    url: "{{ route('blog.search') }}",
-                    type: 'POST',
+                    url: "{{ route('blog.search') }}", // POST route for search and pagination
+                    type: 'post', // Use POST for pagination as well
                     dataType: 'html',
                     cache: false,
                     data: {
                         search: search,
-                        _token: "{{ csrf_token() }}"
+                        page: page, // Send the current page number
+                        "_token": "{{ csrf_token() }}" // CSRF token for security
                     },
-                    success: function (data) {
-                        $('#ajax_search_result').html(data); // Replace the table body with the response
+                    success: function(data) {
+                        $("#ajax_search_result").html(data); // Update the HTML content
                     },
-                    error: function () {
-                        console.error('AJAX Error');
+                    error: function() {
+                        console.error("Error occurred while fetching blogs.");
                     }
                 });
+            }
+
+            // Handle pagination click events with POST
+            $(document).on('click', "#ajax_search_pagination a", function(e) {
+                e.preventDefault(); // Prevent default link behavior
+
+                // Extract the page number from the pagination link
+                var page = $(this).attr("href").split('page=')[1];
+                var search = $("#search").val();
+
+                // Perform search with the extracted page number
+                performSearch(page, search);
             });
         });
     </script>
+
 @endsection

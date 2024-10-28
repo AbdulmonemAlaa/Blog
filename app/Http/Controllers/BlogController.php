@@ -12,7 +12,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::paginate(10);
         return view('blog.index',['blogs'=>$blogs]);
     }
 
@@ -98,14 +98,17 @@ class BlogController extends Controller
 
     public function search(Request $request)
     {
+        $search = $request->input('search');
+        $blogs = Blog::where('title', 'like', '%' . $search . '%')
+            ->orderBy('id', 'ASC')
+            ->paginate(5); // Adjust pagination count as needed
+
+        // If it's an AJAX request, return the partial view with the search results
         if ($request->ajax()) {
-            $search = $request->input('search');
-
-            $blogs = Blog::where('title', 'like', '%' . $search . '%')
-                ->orderBy('id', 'ASC')
-                ->get(); // Fetch all results without pagination
-
-            return view('blog.ajax_search', ['blogs' => $blogs]);
+            return view('blog.ajax_search', ['blogs' => $blogs])->render();
         }
+
     }
+
+
 }
